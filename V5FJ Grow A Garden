@@ -1,0 +1,181 @@
+local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Luxware-UI-Library/main/Source.lua"))()
+
+local Luxt = Luxtl.CreateWindow("V5FJ GUI", 6105620301)
+
+local mainTab1 = Luxt:Tab("Auto-Farm", 6087485864)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local mainTab = mainTab1:Section("Main Features")
+local teleportsTab = Luxt:Tab("Teleport")
+mainTab:Label("Welcome to V5FJ's GUI")
+local TeleportTab = teleportsTab:Section("Teleports")
+local ScriptTab = mainTab1:Section("Inject Scripts")
+ScriptTab:Button("Infinite Yield", function()
+     loadstring(game:HttpGet('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/latest.lua'))()
+end)
+ScriptTab:Button("Remote Spy", function()
+     loadstring(game:HttpGet('https://pastebin.com/raw/fNg41KvF'))()
+end)
+ScriptTab:Button("Grow A Garden", function()
+     loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/refs/heads/main/GrowaGarden", true))()
+end)
+local AutoCycleEnabled = false
+TeleportTab:Button("Seed Shop", function()
+    humanoidRootPart.CFrame = CFrame.new(61.57926559448242, 3, -27.003971099853516)
+end)
+TeleportTab:Button("Sell", function()
+    humanoidRootPart.CFrame = CFrame.new(61.57952117919922, 3, 0.4267846941947937)
+end)
+TeleportTab:Button("Event", function()
+    humanoidRootPart.CFrame = CFrame.new(-101.01649475097656, 4.399947643280029, -8.211289405822754)
+end)
+TeleportTab:Button("Eggs", function()
+    humanoidRootPart.CFrame = CFrame.new(-257.7886657714844, 2.999999761581421, 0.29656022787094116)
+end)
+TeleportTab:Button("Gear Shop", function()
+    humanoidRootPart.CFrame = CFrame.new(-260.75341796875, 2.999999761581421, -31.19173812866211)
+end)
+TeleportTab:Toggle("Auto Cycle Teleport All", function(isToggled)
+    AutoCycleEnabled = isToggled
+end)
+task.spawn(function()
+     while true do 
+     task.wait(0.01)
+          if (AutoCycleEnabled) then
+               humanoidRootPart.CFrame = CFrame.new(61.57926559448242, 3, -27.003971099853516)
+               task.wait(0.08)
+               humanoidRootPart.CFrame = CFrame.new(61.57952117919922, 3, 0.4267846941947937)
+               task.wait(0.08)
+               humanoidRootPart.CFrame = CFrame.new(-101.01649475097656, 4.399947643280029, -8.211289405822754)
+               task.wait(0.08)
+               humanoidRootPart.CFrame = CFrame.new(-257.7886657714844, 2.999999761581421, 0.29656022787094116)
+               task.wait(0.08)
+               humanoidRootPart.CFrame = CFrame.new(-260.75341796875, 2.999999761581421, -31.19173812866211)
+               task.wait(0.08)
+          end
+     end
+end)
+local AutoBuySeed = {}
+local autoBuyEnabled = false
+local autoBuyAllEnabled = false
+local AutoBuyAllEggsEnabled = false
+mainTab:Toggle("Auto Buy All Eggs", function(isToggled)
+    AutoBuyAllEggsEnabled = isToggled
+end)
+task.spawn(function()
+    while true do
+        task.wait(1)
+        if AutoBuyAllEggsEnabled then
+        local Event = game:GetService("ReplicatedStorage").GameEvents.BuyPetEgg
+               Event:FireServer(1)
+               Event:FireServer(2)
+               Event:FireServer(3)
+        end
+     end
+end)
+local A_1 = "Moon Melon"
+local Event = game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock
+Event:FireServer(A_1)
+local AutoBuyEventEnabled = false
+mainTab:Toggle("Auto Buy [Night Seed Packs, Blood Banana Seeds, Moon Melon Seeds] [EVENT]", function(isToggled)
+AutoBuyEventEnabled = isToggled     
+end)
+mainTab:Button("Take Moon Mutated Plants [EVENT]")
+task.spawn(function()
+while true do
+     task.wait(1)
+     if (AutoBuyEventEnabled) then
+     local Event = game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock
+Event:FireServer("Blood Banana")
+Event:FireServer("Moon Melon")
+Event:FireServer("Night Seed Pack")
+end
+end
+end)
+mainTab:DropDown("Select Seed", {
+    "None", "Carrot Seed", "Strawberry Seed", "Blueberry Seed", "Orange Tulip Seed", 
+    "Tomato Seed", "Corn Seed", "Daffodil Seed", "Watermelon Seed", "Pumpkin Seed", 
+    "Apple Seed", "Bamboo Seed", "Coconut Seed", "Cactus Seed", "Dragon Fruit Seed", 
+    "Mango Seed", "Grape Seed", "Mushroom Seed", "Pepper Seed", "Cacao Seed", "Beanstalk Seed"
+}, function(food)
+    if food ~= "None" then
+        AutoBuySeed = {food}
+        print("Selected seed:", food)
+    end
+end)
+
+mainTab:Toggle("Auto Buy Selected Seed", function(isToggled)
+    autoBuyEnabled = isToggled
+end)
+
+mainTab:Toggle("Auto Buy All Seeds", function(isToggled)
+    autoBuyAllEnabled = isToggled
+end)
+task.spawn(function()
+    while true do
+        task.wait(0.1)
+        if autoBuyEnabled and #AutoBuySeed > 0 then
+            for _, seedName in pairs(AutoBuySeed) do
+                local cleanedSeed = seedName:match("^(.-) Seed$") or seedName
+                local Event = game:GetService("ReplicatedStorage").GameEvents.BuySeedStock
+                Event:FireServer(cleanedSeed)
+            end
+        end
+    end
+end)
+ local seeds = {
+        "Carrot Seed", "Strawberry Seed", "Blueberry Seed", "Orange Tulip Seed", 
+        "Tomato Seed", "Corn Seed", "Daffodil Seed", "Watermelon Seed", "Pumpkin Seed", 
+        "Apple Seed", "Bamboo Seed", "Coconut Seed", "Cactus Seed", "Dragon Fruit Seed", 
+        "Mango Seed", "Grape Seed", "Mushroom Seed", "Pepper Seed", "Cacao Seed", "Beanstalk Seed"
+    }
+task.spawn(function()
+    while true do
+        task.wait(0.1)
+        if autoBuyAllEnabled then
+            for _, seedName in pairs(seeds) do
+            local cleanedSeed = seedName:match("^(.-) Seed$") or seedName
+            local Event = game:GetService("ReplicatedStorage").GameEvents.BuySeedStock
+            Event:FireServer(cleanedSeed)
+           end
+        end
+    end
+end)
+
+
+
+local AutoSellDelay = 0
+local AutoSellEnabled = false
+mainTab:Toggle("Auto Sell", function(isToggled)
+    AutoSellEnabled = isToggled
+end)
+mainTab:Slider("Auto Sell Delay", 1, 100, function(currentValue)
+    AutoSellDelay = currentValue 
+end)
+local AntiAFKEnabled = false
+mainTab:Toggle("Anti AFK Kick", function(isToggled)
+    AntiAFKEnabled = isToggled
+end)
+local virtualUser = game:service('VirtualUser')
+game:service('Players').LocalPlayer.Idled:connect(function()
+    if AntiAFKEnabled then
+    virtualUser:CaptureController()
+    virtualUser:ClickButton2(Vector2.new())
+    wait(2)
+    end
+end)
+task.spawn(function()
+    while true do
+        task.wait(0.1)
+        if AutoSellEnabled then
+            local playerCFrame = humanoidRootPart.CFrame
+            humanoidRootPart.CFrame = CFrame.new(62.911407470703125, 2.999999761581421, 0.03504522144794464)
+            task.wait(0.2)
+            local Event = game:GetService("ReplicatedStorage").GameEvents:WaitForChild("Sell_Inventory")
+            Event:FireServer()
+            humanoidRootPart.CFrame = playerCFrame
+            task.wait(AutoSellDelay)
+        end
+    end
+end)

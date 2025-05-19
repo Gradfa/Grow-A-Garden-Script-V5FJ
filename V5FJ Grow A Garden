@@ -78,18 +78,72 @@ local A_1 = "Moon Melon"
 local Event = game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock
 Event:FireServer(A_1)
 local AutoBuyEventEnabled = false
-mainTab:Toggle("Auto Buy [Night Seed Packs, Blood Banana Seeds, Moon Melon Seeds] [EVENT]", function(isToggled)
+mainTab:Toggle("Auto Buy [Night Packs, Blood Banana, Moon Melon] [EVENT]", function(isToggled)
 AutoBuyEventEnabled = isToggled     
 end)
-mainTab:Button("Take Moon Mutated Plants [EVENT]")
+mainTab:Button("Buy [Night Packs, Blood Banana, Moon Melon] [EVENT]", function()
+  local Event = game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock
+Event:FireServer("Blood Banana")
+task.wait(0.1)
+Event:FireServer("Moon Melon")
+task.wait(0.1)
+Event:FireServer("Night Seed Pack")
+task.wait(0.1)
+Event:FireServer("Blood Banana")
+task.wait(0.1)
+Event:FireServer("Moon Melon")
+task.wait(0.1)
+Event:FireServer("Night Seed Pack")
+task.wait(0.1)
+Event:FireServer("Blood Banana")
+task.wait(0.1)
+Event:FireServer("Moon Melon")
+task.wait(0.1)
+Event:FireServer("Night Seed Pack")
+task.wait(0.1)
+Event:FireServer("Blood Banana")
+task.wait(0.1)
+Event:FireServer("Moon Melon")
+task.wait(0.1)
+Event:FireServer("Night Seed Pack")
+task.wait(0.1)
+Event:FireServer("Blood Banana")
+task.wait(0.1)
+Event:FireServer("Moon Melon")
+task.wait(0.1)
+Event:FireServer("Night Seed Pack")
+task.wait(0.1)
+end)
+mainTab:Button("Take Moon Mutated Plants [EVENT]", function()
+local A_1 = "SubmitAllPlants"
+local Event = game:GetService("ReplicatedStorage").GameEvents.NightQuestRemoteEvent
+Event:FireServer(A_1)
+end)
+local AutoTakingMoonPlants = false
+mainTab:Toggle("Auto Take Moon Mutated Plants [EVENT]", function (isToggled)
+AutoTakingMoonPlants = isToggled
+end)
 task.spawn(function()
 while true do
      task.wait(1)
      if (AutoBuyEventEnabled) then
      local Event = game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock
 Event:FireServer("Blood Banana")
+task.wait(0.1)
 Event:FireServer("Moon Melon")
+task.wait(0.1)
 Event:FireServer("Night Seed Pack")
+end
+end
+end)
+task.spawn(function()
+while true do
+     task.wait(1)
+     if (AutoBuyEventEnabled) then
+     local A_1 = "SubmitAllPlants"
+local Event = game:GetService("ReplicatedStorage").GameEvents.NightQuestRemoteEvent
+Event:FireServer(A_1)
+task.wait(1)
 end
 end
 end)

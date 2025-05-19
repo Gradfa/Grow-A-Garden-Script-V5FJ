@@ -72,6 +72,7 @@ task.spawn(function()
                Event:FireServer(2)
                Event:FireServer(3)
         end
+        task.wait(1)
      end
 end)
 local A_1 = "Moon Melon"
@@ -139,7 +140,7 @@ end)
 task.spawn(function()
 while true do
      task.wait(1)
-     if (AutoBuyEventEnabled) then
+     if (AutoTakingMoonPlants) then
      local A_1 = "SubmitAllPlants"
 local Event = game:GetService("ReplicatedStorage").GameEvents.NightQuestRemoteEvent
 Event:FireServer(A_1)

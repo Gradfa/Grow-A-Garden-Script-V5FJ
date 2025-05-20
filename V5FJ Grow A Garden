@@ -2,7 +2,7 @@ local Luxtl = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/
 
 local Luxt = Luxtl.CreateWindow("V5FJ GUI", 6105620301)
 
-local mainTab1 = Luxt:Tab("Auto-Farm", 6087485864)
+local mainTab1 = Luxt:Tab("Main", 6087485864)
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
@@ -10,7 +10,44 @@ local mainTab = mainTab1:Section("Main Features")
 local teleportsTab = Luxt:Tab("Teleport")
 mainTab:Label("Welcome to V5FJ's GUI")
 local TeleportTab = teleportsTab:Section("Teleports")
-local ScriptTab = mainTab1:Section("Inject Scripts")
+local ScriptsTab = Luxt:Tab("Scripts")
+local PlayerTab = Luxt:Tab("Player")
+local MiscTab = Luxt:Tab("Misc")
+local ScriptTab = ScriptsTab:Section("Inject Scripts")
+local PlayerSection = PlayerTab:Section("LocalPlayer")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local function getHumanoid()
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    return character:WaitForChild("Humanoid")
+end
+PlayerSection:Slider("WalkSpeed", 1, 100, function(Value)
+    local humanoid = getHumanoid()
+    humanoid.WalkSpeed = Value * 10
+end)
+PlayerSection:Slider("Jump Power", 1, 100, function(Value)
+    local humanoid = getHumanoid()
+    humanoid.JumpPower = Value * 10
+end)
+local FlyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/Gradfa/Fly/refs/heads/main/Fly%20Script"))()
+local FlySpeed = 10
+local isFlying = false
+
+PlayerSection:Toggle("Fly", function(isToggled)
+    isFlying = isToggled
+    if isFlying then
+        FlyModule:Start()
+         FlyModule:SetSpeed(FlySpeed)
+    else
+    FlyModule = loadstring(game:HttpGet("https://raw.githubusercontent.com/Gradfa/Fly/refs/heads/main/Fly%20Script"))()
+        FlyModule:Stop()
+    end
+end)
+
+PlayerSection:Slider("Fly Speed", 1, 100, function(value)
+    FlySpeed = value
+    FlyModule:SetSpeed(FlySpeed)
+end)
 ScriptTab:Button("Infinite Yield", function()
      loadstring(game:HttpGet('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/latest.lua'))()
 end)
